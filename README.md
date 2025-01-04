@@ -1,3 +1,3 @@
-First part of the Operating Systems project
+Project made in Operating Systems 
 
-Grade: 17.36 out of 20.00 
+First Part: 17.36 out of 20.00
