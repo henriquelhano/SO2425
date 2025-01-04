@@ -1,0 +1,19 @@
+#Ver se o comando SHOW não mostra nada no .out
+#Ver se o comando BACKUP não mostra nada no .out
+#Ver se aparece o KVSMISSING numa chave que não existe
+#Verifica se apaga chaves apagadas multiplas no mesmo comando
+#Verifica se escreve chaves multiplas no mesmo comando
+#Testar BACKUP e que a extensão do ficheiro será -1.bck e -2.bck
+#O WRITE reescreve o valor da chave caso já exista
+#Testar que tem de ser escrito no formato certo
+SHOW
+BACKUP
+WRITE [(Alentejo,vinho-branco)(Douro,barca-velha)]
+DELETE [freijoão]
+SHOW
+DELETE [Alentejo]
+SHOW
+BACKUP
+WRITE [(Douro,meandro)(Dão,unico)]
+WRITE [(Alentejo,esporão)]
+SHOW

@@ -1,0 +1,10 @@
+WRITE [(maçãs,frutas)(laranja,frutas)]
+BACKUP
+WRITE [(abacaxi,frutas)(kiwi,frutas)]
+BACKUP
+WRITE [(bananas,frutas)(morangos,frutas)]
+BACKUP
+WRITE [(manga,frutas)(abacates,frutas)]
+WAIT 1000
+BACKUP
+SHOW
