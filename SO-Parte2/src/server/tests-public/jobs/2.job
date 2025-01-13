@@ -1,0 +1,8 @@
+#Ver se o comando READ mostra o KVSERROR caso leia uma chave que não exista
+#Ver se o comando READ lê múltiplas chaves no mesmo comando e em separado
+WRITE [(Alentejo,vinho-branco)(Douro,barca-velha)]
+WRITE [(Bairrada,principal)]
+READ [freijoão]
+READ [Bairrada]
+WRITE [bairrada.alentejo]
+READ [Alentejo,Douro]
