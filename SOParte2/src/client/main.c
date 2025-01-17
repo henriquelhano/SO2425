@@ -10,7 +10,6 @@
 #include "src/client/api.h"
 #include "src/common/constants.h"
 #include "src/common/io.h"
-#include "src/server/kvs.h"
 
 void *thread_notif(void* arg) {
   int* notif_fd = (int*)arg;
@@ -31,13 +30,13 @@ void *thread_notif(void* arg) {
       exit(EXIT_FAILURE);
     }
 
-    strncpy(key, notification+2, MAX_STRING_SIZE);
-    strncpy(value, notification+2, MAX_STRING_SIZE);
+    strncpy(key, notification + 2, MAX_STRING_SIZE);
+    strncpy(value, notification + 2, MAX_STRING_SIZE);
+
     printf("(%s,%s)\n", key, value);
 
   }
 }
-
 
 int main(int argc, char *argv[]) {
   if (argc < 3) {
@@ -76,7 +75,6 @@ int main(int argc, char *argv[]) {
     switch (get_next(STDIN_FILENO)) {
     case CMD_DISCONNECT:
       if (kvs_disconnect() != 0) {
-        printf("bananas\n");
         fprintf(stderr, "Failed to disconnect to the server\n");
         return 1;
       }

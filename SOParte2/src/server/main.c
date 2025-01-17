@@ -17,12 +17,10 @@
 #include "parser.h"
 #include "operations.h"
 #include "src/common/constants.h"
-#include "src/common/protocol.h"
 
 sem_t SEM_BUFFER_SPACE;
 sem_t SEM_BUFFER_CLIENTS;
 pthread_mutex_t BUFFER_MUTEX;
-//volatile sig_atomic_t sigur1_received = 0;
 
 char BUFFER[MAX_SESSION_COUNT][1 + 3 * MAX_PIPE_PATH_LENGTH] = {0};
 int BUFFER_READ_INDEX = 0;
@@ -249,12 +247,6 @@ void process_job_directory(const char *input_dir, const char *output_dir, int ma
 }
 
 
-/*void handle_sigusr1(int sig){
-  printf("Received SIGUSR1 in Handle\n");
-  sigusr1_received = 1;
-}
-*/
-
 void *host_FIFO(void *arg) {
   char *register_FIFO_name = (char *)arg;
 
@@ -370,15 +362,14 @@ void *thread_manage_session(void *arg) {
 
       int result;
       switch (op_code) {
-        case OP_CODE_DISCONNECT: 
+        case 2: //disconnect
           // OP_CODE=2
-          //removerTodasSubscricoes(key,data);
-          //response[1] = (char) result+'0';
           send_msg(notif_fd, response);
+          printf("pipe closed\n");
 
           break;
           
-        case OP_CODE_SUBSCRIBE:
+        case 3: //subscribe
           // OP_CODE=3 | key
           strncpy(key, request + 1, 41);
           result = kvs_subscribe(key, notif_fd, data);
@@ -387,7 +378,7 @@ void *thread_manage_session(void *arg) {
 
           break;
           
-        case OP_CODE_UNSUBSCRIBE:
+        case 4: //unsubscribe
           // OP_CODE=4 | key
           strncpy(key, request + 1, 41);
           result = kvs_unsubscribe(key, notif_fd, data);
@@ -412,19 +403,6 @@ void *thread_manage_session(void *arg) {
     close(notif_fd);
   }
 }
-/*
-void removerTodasSubscricoes(const char *key, ThreadData data) { //Após disconnect, remove todas as subscrições
-    int index = hash(key);
-    KeyNode *keyNode = ht->table[index];
-
-    while (keyNode != NULL) {
-        for (int i = 0; i < MAX_SESSION_COUNT; i++) {
-          kvs_unsubscribe(key,i,data);
-        }
-        keyNode = keyNode->next; // Move to the next node
-    }
-    return 1; // Failed
-}*/
 
 int main(int argc, char *argv[]) {
   if (argc < 5) {

@@ -9,16 +9,18 @@
 #bananas
 SHOW
 BACKUP
-WAIT 1000
 WRITE [(Alentejo,vinho-branco)(Douro,barca-velha)]
+WAIT 1000
 READ [Alentejo]
+WAIT 1000
 READ [freijoão]
+WAIT 1000
 DELETE [freijoão]
 SHOW
 DELETE [Alentejo]
 SHOW
 BACKUP
-WAIT 30000
+WAIT 5000
 WRITE [(Douro,meandro)(Dão,unico)]
 WRITE [(Alentejo,esporão)]
 SHOW

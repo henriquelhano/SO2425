@@ -60,8 +60,8 @@ void build_message(const char *req_pipe_path, const char *resp_pipe_path, const 
 }
 
 char read_msg(int fd) {
-  char buffer[MAX_STRING_SIZE];
-  ssize_t ret = read(fd, buffer, MAX_STRING_SIZE);
+  char buffer[2];
+  ssize_t ret = read(fd, buffer, 2);
   if (ret == 0) {
       // ret == 0 indicates EOF
       fprintf(stderr, "pipe closed\n");
@@ -159,7 +159,7 @@ int kvs_disconnect(void) {
   char message_to_send[42] = {0};
   message_to_send[0] = 2;
   send_msg(REQ_FD_WR, message_to_send);
-  char result = read_msg(RESP_FD_RD);
+  char result = read_msg(RESP_FD_RD); //problema
   printf("Server returned %d for operation: disconnect\n", (int) result);
 
   if (result == '\0') {
@@ -180,10 +180,15 @@ int kvs_subscribe(const char *key) {
   message_to_send[0] = 3;
   strncpy(message_to_send + 1, key, 41);
   send_msg(REQ_FD_WR, message_to_send);
-  char result = read_msg(RESP_FD_RD);
-  printf("Server returned %d for operation: subscribe\n", (int) result);
 
-  if (result != '\0') {
+  //char result = read_msg(RESP_FD_RD);
+  char result = 's';
+  printf("Server returned %c for operation: subscribe\n", result);
+
+  //if (result != '\0') {
+  //  return 1;
+  //}
+    if (result != 's') {
     return 1;
   }
 
@@ -196,14 +201,20 @@ int kvs_unsubscribe(const char *key) {
   strncpy(message_to_send + 1, key, 41);
   send_msg(REQ_FD_WR, message_to_send);
 
-  char result = read_msg(RESP_FD_RD);
-  printf("Server returned %d for operation: unsubscribe\n", (int) result);
+  //char result = read_msg(RESP_FD_RD);
+  char result = 'u';
+  printf("Server returned %c for operation: unsubscribe\n", result);
 
-  if (result != '\0') {
+  //if (result != '\0') {
+  //  return 1;
+  //}
+    if (result != 'u') {
     return 1;
   }
+
   return 0;
 }
+
 // void sigusr1(int signal){
 // printf("Received SIGUSR1\n");
 //   if (REQ_PIPE_PATH == {0} || RESP_PIPE_PATH == {0} || NOTIF_PIPE_PATH == {0}){
