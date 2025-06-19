@@ -1,4 +1,4 @@
-Project made in Operating Systems 
+Project made in Operating Systems Course
 
 First Part: 17.36 out of 20.00
 
