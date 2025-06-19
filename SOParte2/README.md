@@ -73,3 +73,7 @@ To run a client, use the following command (in the src/client directory):
 > [!NOTE]\
 > When running multiple clients use different client id's.
 
+#### Final Grade
+First Part: 17.36 out of 20.00
+Second Part: 14.32 out of 20.00
+Final Grade: 15.84 out of 20.00
